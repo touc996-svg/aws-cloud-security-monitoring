@@ -57,9 +57,9 @@ Add architecture diagrams and sanitized screenshots.
 
 Project Type: Personal Cloud Security Lab
 Environment: AWS US East (N. Virginia) — us-east-1
- A[AWS Account Activity] --> B[CloudTrail]
+flowchart TD
+    A[AWS Account Activity] --> B[CloudTrail]
     C[GuardDuty] --> D[EventBridge Rule]
     D --> E[SNS Topic]
     E --> F[Email Security Alert]
     B --> G[Audit Logs in S3]
-    

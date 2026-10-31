@@ -53,12 +53,6 @@ Email alert successfully received.
 This project demonstrates an AWS security monitoring workflow using managed detection, event-driven alerting, and centralized audit logging.
 
 The test used simulated findings and does not represent a confirmed real-world security incident.
-## Incident Response Workflow
 
-```mermaid
-flowchart TD
-    A[GuardDuty Finding] --> B[EventBridge]
-    B --> C[SNS Email Alert]
-    C --> D[Analyst Review]
-    D --> E[Investigate Finding]
-    E --> F[Document Results]
+
+

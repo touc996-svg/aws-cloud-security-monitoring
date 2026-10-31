@@ -57,7 +57,7 @@ Add architecture diagrams and sanitized screenshots.
 
 Project Type: Personal Cloud Security Lab
 Environment: AWS US East (N. Virginia) — us-east-1
-'''mermaid
+'''mermaid'''
 flowchart TD
     A[AWS Account Activity] --> B[CloudTrail]
     C[GuardDuty] --> D[EventBridge Rule]

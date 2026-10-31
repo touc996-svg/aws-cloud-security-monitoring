@@ -1,0 +1,55 @@
+AWS Security Incident Report
+
+1. Incident Overview
+
+Project: AWS Cloud Security Monitoring and Threat Detection System
+Environment: AWS – us-east-1
+Incident Type: Simulated security finding
+Detection Service: Amazon GuardDuty
+Alerting Services: Amazon EventBridge and Amazon SNS
+Status: Investigated – Simulation
+
+2. Detection
+
+Amazon GuardDuty generated sample security findings to test the monitoring system.
+
+The findings were detected by GuardDuty and matched an EventBridge rule configured to receive GuardDuty security findings.
+
+Amazon SNS delivered an email notification confirming that the alerting pipeline was working.
+
+3. Investigation Process
+
+The following steps were used:
+
+Opened the GuardDuty console.
+Reviewed the generated sample findings.
+Examined the finding details and severity.
+Verified that EventBridge received the finding.
+Confirmed that SNS delivered the email notification.
+
+4. Recommended Response
+
+For a real security incident, the response would depend on the finding and affected resource.
+
+Recommended actions include:
+
+Validate the finding and identify the affected AWS resource.
+Review related CloudTrail events.
+Determine whether unauthorized activity occurred.
+Contain compromised resources or credentials when appropriate.
+Restore affected resources and strengthen security controls.
+Document the investigation and resolution.
+
+5. Test Results
+  Result: Successful.
+
+GuardDuty sample findings generated.
+EventBridge rule configured and enabled.
+SNS email subscription confirmed.
+Email alert successfully received.
+
+6. Conclusion
+
+This project demonstrates an AWS security monitoring workflow using managed detection, event-driven alerting, and centralized audit logging.
+
+The test used simulated findings and does not represent a confirmed real-world security incident.

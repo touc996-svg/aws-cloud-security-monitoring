@@ -57,10 +57,11 @@ Add architecture diagrams and sanitized screenshots.
 
 Project Type: Personal Cloud Security Lab
 Environment: AWS US East (N. Virginia) — us-east-1
-'''mermaid'''
+```mermaid
 flowchart TD
-    A[AWS Account Activity] --> B[CloudTrail]
-    C[GuardDuty] --> D[EventBridge Rule]
-    D --> E[SNS Topic]
-    E --> F[Email Security Alert]
-    B --> G[Audit Logs in S3]
+    A["AWS Account Activity"] --> B["CloudTrail"]
+    B --> C[("Amazon S3 Audit Logs")]
+    D["Amazon GuardDuty"] --> E["Amazon EventBridge"]
+    E --> F["Amazon SNS"]
+    F --> G["Email Security Alert"]
+```

@@ -57,13 +57,8 @@ The test used simulated findings and does not represent a confirmed real-world s
 
 ```mermaid
 flowchart TD
-    A["GuardDuty Detects Finding"] --> B["EventBridge Receives Event"]
-    B --> C["SNS Sends Email Alert"]
-    C --> D["Security Analyst Reviews Finding"]
-    D --> E["Investigate Affected Resource"]
-    E --> F{"Is the Finding Confirmed?"}
-    F -->|Yes| G["Contain and Remediate"]
-    F -->|No| H["Document as False Positive"]
-    G --> I["Document Incident"]
-    H --> I
-```
+    A[GuardDuty Finding] --> B[EventBridge]
+    B --> C[SNS Email Alert]
+    C --> D[Analyst Review]
+    D --> E[Investigate Finding]
+    E --> F[Document Results]

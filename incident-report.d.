@@ -53,3 +53,15 @@ Email alert successfully received.
 This project demonstrates an AWS security monitoring workflow using managed detection, event-driven alerting, and centralized audit logging.
 
 The test used simulated findings and does not represent a confirmed real-world security incident.
+```mermaid
+flowchart TD
+    A["GuardDuty Detects Finding"] --> B["EventBridge Receives Event"]
+    B --> C["SNS Sends Email Alert"]
+    C --> D["Security Analyst Reviews Finding"]
+    D --> E["Investigate Affected Resource"]
+    E --> F{"Is the Finding Confirmed?"}
+    F -->|Yes| G["Contain and Remediate"]
+    F -->|No| H["Document as False Positive"]
+    G --> I["Document Incident"]
+    H --> I
+```

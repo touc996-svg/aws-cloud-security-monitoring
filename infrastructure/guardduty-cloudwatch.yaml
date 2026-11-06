@@ -1,0 +1,121 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: GuardDuty findings logging, metrics, and CloudWatch dashboard.
+
+Resources:
+  GuardDutyFindingsLogGroup:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: /aws/events/guardduty-findings
+      RetentionInDays: 90
+
+  GuardDutyFindingsRule:
+    Type: AWS::Events::Rule
+    Properties:
+      Name: guardduty-findings-to-cloudwatch
+      Description: Sends GuardDuty findings to CloudWatch Logs.
+      State: ENABLED
+      EventPattern:
+        source:
+          - aws.guardduty
+        detail-type:
+          - GuardDuty Finding
+      Targets:
+        - Id: GuardDutyCloudWatchLogs
+          Arn: !GetAtt GuardDutyFindingsLogGroup.Arn
+
+  GuardDutyLogResourcePolicy:
+    Type: AWS::Logs::ResourcePolicy
+    Properties:
+      PolicyName: GuardDutyEventBridgeCloudWatchAccess
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Sid: AllowOnlyGuardDutyRuleToWrite
+            Effect: Allow
+            Principal:
+              Service:
+                - events.amazonaws.com
+                - delivery.logs.amazonaws.com
+            Action:
+              - logs:CreateLogStream
+              - logs:PutLogEvents
+            Resource: !GetAtt GuardDutyFindingsLogGroup.Arn
+            Condition:
+              ArnEquals:
+                aws:SourceArn: !GetAtt GuardDutyFindingsRule.Arn
+
+  AllGuardDutyFindingsMetric:
+    Type: AWS::Logs::MetricFilter
+    Properties:
+      LogGroupName: !Ref GuardDutyFindingsLogGroup
+      FilterPattern: '{ $.detail.severity >= 4 }'
+      MetricTransformations:
+        - MetricNamespace: SecurityMonitoring/GuardDuty
+          MetricName: FindingCount
+          MetricValue: "1"
+          Unit: Count
+
+  HighSeverityFindingsMetric:
+    Type: AWS::Logs::MetricFilter
+    Properties:
+      LogGroupName: !Ref GuardDutyFindingsLogGroup
+      FilterPattern: '{ $.detail.severity >= 7 }'
+      MetricTransformations:
+        - MetricNamespace: SecurityMonitoring/GuardDuty
+          MetricName: HighSeverityFindingCount
+          MetricValue: "1"
+          Unit: Count
+
+  GuardDutyDashboard:
+    Type: AWS::CloudWatch::Dashboard
+    Properties:
+      DashboardName: GuardDuty-Security-Monitoring
+      DashboardBody: !Sub |
+        {
+          "widgets": [
+            {
+              "type": "metric",
+              "x": 0,
+              "y": 0,
+              "width": 12,
+              "height": 6,
+              "properties": {
+                "title": "GuardDuty Findings",
+                "view": "timeSeries",
+                "region": "${AWS::Region}",
+                "period": 300,
+                "stat": "Sum",
+                "metrics": [
+                  ["SecurityMonitoring/GuardDuty", "FindingCount"],
+                  [".", "HighSeverityFindingCount"]
+                ]
+              }
+            },
+            {
+              "type": "log",
+              "x": 0,
+              "y": 6,
+              "width": 24,
+              "height": 6,
+              "properties": {
+                "title": "Recent GuardDuty Findings",
+                "region": "${AWS::Region}",
+                "view": "table",
+                "query": "SOURCE '/aws/events/guardduty-findings' | fields @timestamp, detail.severity, detail.type, detail.title | sort @timestamp desc | limit 20"
+              }
+            }
+          ]
+        }
+
+Outputs:
+  GuardDutyLogGroup:
+    Description: CloudWatch log group receiving GuardDuty findings.
+    Value: !Ref GuardDutyFindingsLogGroup
+
+  GuardDutyDashboardName:
+    Description: CloudWatch dashboard name.
+    Value: GuardDuty-Security-Monitoring
+
+  GuardDutyEventRuleArn:
+    Description: EventBridge rule ARN.
+    Value: !GetAtt GuardDutyFindingsRule.Arn

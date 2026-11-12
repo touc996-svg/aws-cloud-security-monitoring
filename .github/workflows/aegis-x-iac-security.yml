@@ -18,9 +18,12 @@ permissions:
 jobs:
   terraform-validation:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        module: [bootstrap, aws-governance]
     defaults:
       run:
-        working-directory: aegis-x/terraform/bootstrap
+        working-directory: aegis-x/terraform/${{ matrix.module }}
     steps:
       - uses: actions/checkout@v4
       - uses: hashicorp/setup-terraform@v3

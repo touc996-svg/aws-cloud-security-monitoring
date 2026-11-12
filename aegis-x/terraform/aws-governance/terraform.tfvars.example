@@ -1,0 +1,9 @@
+# Copy to terraform.tfvars (git-ignored). Both controls are OFF by default
+# because they are billable; flip them only after reviewing `terraform plan`
+# and the cost estimate in README.md.
+aws_region          = "us-east-1"
+environment         = "sandbox"
+
+enable_config               = false
+config_record_all_resources = false
+enable_security_hub         = false

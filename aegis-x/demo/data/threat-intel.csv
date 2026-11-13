@@ -1,0 +1,2 @@
+indicator,type,source,confidence,description
+203.0.113.50,ip,example-feed (documentation range),90,Demo C2 server

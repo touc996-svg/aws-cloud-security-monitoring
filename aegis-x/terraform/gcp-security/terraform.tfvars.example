@@ -1,0 +1,13 @@
+# Copy to terraform.tfvars. Placeholders only; no credentials belong here.
+project_id      = "my-security-project"
+organization_id = "123456789012"
+region          = "us-central1"
+
+# Every feature is OFF by default. Enable deliberately, one at a time.
+enable_scc_notifications = false
+enable_audit_log_sink    = false
+enable_org_policies      = false
+
+# audit_sink_scope  = "organization"
+# org_policy_parent = "organizations/123456789012"
+# log_retention_days = 365

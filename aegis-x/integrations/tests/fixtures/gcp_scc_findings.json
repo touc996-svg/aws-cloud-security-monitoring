@@ -1,0 +1,52 @@
+[
+  {
+    "finding": {
+      "name": "organizations/111222333444/sources/5678901234/findings/a1b2c3d4e5f6",
+      "parent": "organizations/111222333444/sources/5678901234",
+      "resourceName": "//compute.googleapis.com/projects/acme-prod-1/zones/us-central1-a/instances/9876543210",
+      "state": "ACTIVE",
+      "category": "Persistence: IAM Anomalous Grant",
+      "externalUri": "https://console.cloud.google.com/security/command-center/findings?project=acme-prod-1",
+      "eventTime": "2026-11-10T08:15:30.123456789Z",
+      "createTime": "2026-11-10T08:16:02.500Z",
+      "severity": "HIGH",
+      "canonicalName": "projects/222333/sources/5678901234/findings/a1b2c3d4e5f6",
+      "mute": "UNMUTED",
+      "findingClass": "THREAT",
+      "description": "An IAM role was granted to an unusual principal.",
+      "mitreAttack": {
+        "primaryTactic": "PERSISTENCE",
+        "primaryTechniques": ["ACCOUNT_MANIPULATION"],
+        "additionalTechniques": ["T1098", "ACCOUNT_MANIPULATION"]
+      },
+      "attackExposure": {"score": 4.5, "state": "CALCULATED"}
+    },
+    "resource": {
+      "name": "//compute.googleapis.com/projects/acme-prod-1/zones/us-central1-a/instances/9876543210",
+      "projectDisplayName": "acme-prod-1",
+      "type": "google.compute.Instance"
+    }
+  },
+  {
+    "finding": {
+      "name": "projects/acme-prod-1/sources/42/findings/pubbucket",
+      "resourceName": "//storage.googleapis.com/acme-public-bucket",
+      "state": "INACTIVE",
+      "category": "PUBLIC_BUCKET_ACL",
+      "eventTime": "2026-11-09T01:00:00Z",
+      "severity": "SEVERITY_UNSPECIFIED"
+    },
+    "resource": {"projectDisplayName": "acme-prod-1"}
+  },
+  {
+    "finding": {
+      "name": "organizations/111222333444/sources/77/findings/mutedone",
+      "resourceName": "//container.googleapis.com/projects/acme-dev/locations/europe-west1/clusters/c1",
+      "state": "ACTIVE",
+      "mute": "MUTED",
+      "category": "OPEN_FIREWALL",
+      "createTime": "2026-11-01T00:00:00Z",
+      "severity": "LOW"
+    }
+  }
+]

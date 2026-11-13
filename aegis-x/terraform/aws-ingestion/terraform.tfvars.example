@@ -1,0 +1,6 @@
+# Copy to terraform.tfvars (git-ignored). Ingestion is OFF by default because
+# every resource is billable; flip it only after reviewing `terraform plan`
+# and the cost estimate in README.md.
+aws_region       = "us-east-1"
+environment      = "sandbox"
+enable_ingestion = false

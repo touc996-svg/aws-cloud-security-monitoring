@@ -1,0 +1,109 @@
+{
+  "incident_arm": {
+    "id": "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/rg-sec/providers/Microsoft.OperationalInsights/workspaces/law-aegis/providers/Microsoft.SecurityInsights/incidents/5f2a1c0e-0b1d-4a55-9a77-0123456789ab",
+    "name": "5f2a1c0e-0b1d-4a55-9a77-0123456789ab",
+    "type": "Microsoft.SecurityInsights/incidents",
+    "location": "westeurope",
+    "properties": {
+      "title": "Suspicious sign-in followed by mailbox rule creation",
+      "description": "Multiple correlated alerts for one user.",
+      "severity": "High",
+      "status": "Active",
+      "classification": "Undetermined",
+      "incidentNumber": 42,
+      "createdTimeUtc": "2026-11-01T08:15:30.1234567Z",
+      "firstActivityTimeUtc": "2026-11-01T08:00:00.0000000Z",
+      "lastActivityTimeUtc": "2026-11-01T08:12:00Z",
+      "lastModifiedTimeUtc": "2026-11-01T09:00:00Z",
+      "incidentUrl": "https://portal.azure.com/#asset/Microsoft_Azure_Security_Insights/Incident/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/rg-sec/providers/Microsoft.OperationalInsights/workspaces/law-aegis/providers/Microsoft.SecurityInsights/Incidents/5f2a1c0e-0b1d-4a55-9a77-0123456789ab",
+      "additionalData": {
+        "alertsCount": 2,
+        "tactics": ["InitialAccess", "Persistence"],
+        "techniques": ["T1078", "T1137"]
+      }
+    }
+  },
+  "incident_arm_no_mitre": {
+    "id": "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/rg-sec/providers/Microsoft.OperationalInsights/workspaces/law-aegis/providers/Microsoft.SecurityInsights/incidents/aaaaaaaa-0b1d-4a55-9a77-0123456789ab",
+    "name": "aaaaaaaa-0b1d-4a55-9a77-0123456789ab",
+    "type": "Microsoft.SecurityInsights/incidents",
+    "properties": {
+      "title": "Informational noise",
+      "severity": "Informational",
+      "status": "Closed",
+      "createdTimeUtc": "2026-11-02T00:00:00Z",
+      "additionalData": {"alertsCount": 1, "tactics": [], "techniques": []}
+    }
+  },
+  "incident_table_row": {
+    "TenantId": "81b0daa5-5660-4a8d-85f2-b4c5c868766f",
+    "TimeGenerated": "2026-11-03T10:05:00Z",
+    "IncidentName": "bbbbbbbb-0b1d-4a55-9a77-0123456789ab",
+    "Title": "Anomalous token activity",
+    "Description": "",
+    "Severity": "Medium",
+    "Status": "New",
+    "ProviderName": "Azure Sentinel",
+    "FirstActivityTime": "2026-11-03T09:50:00Z",
+    "LastActivityTime": "2026-11-03T10:00:00Z",
+    "CreatedTime": "2026-11-03T10:05:00Z",
+    "IncidentNumber": 43,
+    "AlertIds": ["11111111-aaaa-bbbb-cccc-000000000001", "11111111-aaaa-bbbb-cccc-000000000002"],
+    "IncidentUrl": "https://portal.azure.com/#asset/Microsoft_Azure_Security_Insights/Incident/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/rg-sec/providers/Microsoft.OperationalInsights/workspaces/law-aegis/providers/Microsoft.SecurityInsights/Incidents/bbbbbbbb-0b1d-4a55-9a77-0123456789ab",
+    "AdditionalData": {"alertsCount": 2, "tactics": ["CredentialAccess"], "techniques": ["T1528"]}
+  },
+  "alert_table_row": {
+    "TenantId": "81b0daa5-5660-4a8d-85f2-b4c5c868766f",
+    "TimeGenerated": "2026-11-04T12:00:05Z",
+    "AlertName": "Suspicious PowerShell",
+    "DisplayName": "Suspicious PowerShell command line",
+    "AlertSeverity": "Low",
+    "Description": "PowerShell with encoded command.",
+    "ProviderName": "MDATP",
+    "VendorName": "Microsoft",
+    "VendorOriginalId": "da637000000000000000_1",
+    "SystemAlertId": "cccccccc-0b1d-4a55-9a77-0123456789ab",
+    "ResourceId": "/subscriptions/99999999-1111-2222-3333-444444444444/resourceGroups/rg-app/providers/Microsoft.Compute/virtualMachines/vm-web01",
+    "WorkspaceSubscriptionId": "00000000-1111-2222-3333-444444444444",
+    "AlertType": "MDATP_Suspicious_PS",
+    "Status": "New",
+    "StartTime": "2026-11-04T11:58:00.5000000Z",
+    "EndTime": "2026-11-04T11:59:00Z",
+    "Tactics": "Execution, DefenseEvasion",
+    "Techniques": "[\"T1059\",\"T1027\"]",
+    "SubTechniques": "[\"T1059.001\"]",
+    "AlertLink": "https://portal.azure.com/#alert/cccccccc"
+  },
+  "alert_table_row_no_mitre": {
+    "TimeGenerated": "2026-11-05T01:00:00Z",
+    "AlertName": "Custom rule fired",
+    "AlertSeverity": "Informational",
+    "SystemAlertId": "dddddddd-0b1d-4a55-9a77-0123456789ab",
+    "WorkspaceSubscriptionId": "00000000-1111-2222-3333-444444444444",
+    "Status": "Resolved",
+    "Tactics": "",
+    "Techniques": ""
+  },
+  "alert_arm": {
+    "id": "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/rg-sec/providers/Microsoft.OperationalInsights/workspaces/law-aegis/providers/Microsoft.SecurityInsights/entities/eeeeeeee-0b1d-4a55-9a77-0123456789ab",
+    "name": "eeeeeeee-0b1d-4a55-9a77-0123456789ab",
+    "kind": "SecurityAlert",
+    "type": "Microsoft.SecurityInsights/entities",
+    "properties": {
+      "systemAlertId": "eeeeeeee-0b1d-4a55-9a77-0123456789ab",
+      "alertDisplayName": "Storage account key used from unusual IP",
+      "severity": "Medium",
+      "description": "Key-based access from a new location.",
+      "alertType": "STORAGE_UnusualAccess",
+      "status": "New",
+      "startTimeUtc": "2026-11-06T03:00:00Z",
+      "endTimeUtc": "2026-11-06T03:05:00Z",
+      "tactics": ["Collection"],
+      "techniques": ["T1530"],
+      "resourceIdentifiers": [
+        {"type": "LogAnalytics", "workspaceId": "x"},
+        {"type": "AzureResource", "azureResourceId": "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/rg-data/providers/Microsoft.Storage/storageAccounts/stdata01"}
+      ]
+    }
+  }
+}

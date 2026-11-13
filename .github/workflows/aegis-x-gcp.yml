@@ -1,0 +1,59 @@
+name: AEGIS-X GCP
+
+on:
+  pull_request:
+    paths:
+      - 'aegis-x/integrations/gcp/**'
+      - 'aegis-x/integrations/tests/test_gcp_*.py'
+      - 'aegis-x/integrations/tests/fixtures/gcp_*'
+      - 'aegis-x/terraform/gcp-security/**'
+      - '.github/workflows/aegis-x-gcp.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'aegis-x/integrations/gcp/**'
+      - 'aegis-x/integrations/tests/test_gcp_*.py'
+      - 'aegis-x/terraform/gcp-security/**'
+      - '.github/workflows/aegis-x-gcp.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  terraform-validation:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: aegis-x/terraform/gcp-security
+    steps:
+      - uses: actions/checkout@v4
+      - uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: '1.17.1'
+      - run: terraform fmt -check -recursive
+      - run: terraform init -backend=false
+      - run: terraform validate
+
+  checkov:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: bridgecrewio/checkov-action@v12
+        with:
+          directory: aegis-x/terraform/gcp-security
+          framework: terraform
+          soft_fail: false
+
+  tests:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: aegis-x/integrations
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -r requirements-dev.txt
+      - run: python -m pytest -q tests/test_gcp_scc_normalizer.py

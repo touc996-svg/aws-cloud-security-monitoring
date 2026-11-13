@@ -43,30 +43,60 @@ def severity_label(score: float) -> str:
 
 
 def extract_finding(payload: dict[str, Any]) -> dict[str, Any]:
-    """Return the GuardDuty finding from a bare finding or EventBridge event."""
+    """Return the finding (keys folded to camelCase) from a bare finding or EventBridge event."""
     if not isinstance(payload, dict):
         raise NormalizationError("payload must be a JSON object")
     if payload.get("detail-type") == "GuardDuty Finding":
         detail = payload.get("detail")
         if not isinstance(detail, dict):
             raise NormalizationError("EventBridge event has no 'detail' object")
-        return detail
-    return payload
+        return fold_keys(detail)
+    return fold_keys(payload)
+
+
+def fold_keys(value: Any) -> Any:
+    """Return a copy with every dict key's first letter lower-cased.
+
+    ``aws guardduty get-findings`` returns PascalCase keys (``AccountId``)
+    while EventBridge events use camelCase (``accountId``). Folding lets one
+    code path read both. Used on a working copy only; ``raw_payload`` is never
+    folded.
+    """
+    if isinstance(value, dict):
+        return {(k[:1].lower() + k[1:] if isinstance(k, str) else k): fold_keys(v) for k, v in value.items()}
+    if isinstance(value, list):
+        return [fold_keys(v) for v in value]
+    return value
+
+
+# resourceType -> ordered (detail key, field) candidates; lists use their first item.
+_RESOURCE_ID_PATHS: dict[str, tuple[tuple[str, str], ...]] = {
+    "Instance": (("instanceDetails", "instanceId"),),
+    "AccessKey": (("accessKeyDetails", "accessKeyId"),),
+    "S3Bucket": (("s3BucketDetails", "arn"),),
+    "EKSCluster": (("eksClusterDetails", "arn"),),
+    "ECSCluster": (("ecsClusterDetails", "arn"),),
+    "KubernetesCluster": (("eksClusterDetails", "arn"), ("instanceDetails", "instanceId")),
+    "Container": (("containerDetails", "id"), ("instanceDetails", "instanceId")),
+    "RDSDBInstance": (("rdsDbInstanceDetails", "dbInstanceArn"),),
+    "RDSLimitlessDB": (("rdsLimitlessDbDetails", "dbShardGroupArn"),),
+}
+
+
+def _first(detail: Any) -> dict[str, Any]:
+    if isinstance(detail, list):
+        detail = detail[0] if detail else {}
+    return detail if isinstance(detail, dict) else {}
 
 
 def _resource_id(finding: dict[str, Any]) -> str:
     resource = finding.get("resource") or {}
     rtype = resource.get("resourceType", "")
-    if rtype == "Instance":
-        value = (resource.get("instanceDetails") or {}).get("instanceId")
-    elif rtype == "AccessKey":
-        value = (resource.get("accessKeyDetails") or {}).get("accessKeyId")
-    elif rtype == "S3Bucket":
-        buckets = resource.get("s3BucketDetails") or []
-        value = buckets[0].get("arn") if buckets else None
-    else:
-        value = None
-    return value or finding.get("arn") or rtype or "unknown"
+    for key, field in _RESOURCE_ID_PATHS.get(rtype, ()):
+        value = _first(resource.get(key)).get(field)
+        if value:
+            return str(value)
+    return finding.get("arn") or rtype or "unknown"
 
 
 def _status(finding: dict[str, Any]) -> str:
@@ -135,7 +165,7 @@ def normalize_many(payloads: Iterable[dict[str, Any]], *, now: datetime | None =
 def _load(stream) -> list[dict[str, Any]]:
     data = json.load(stream)
     if isinstance(data, dict) and isinstance(data.get("Findings"), list):
-        return data["Findings"]  # `aws guardduty get-findings` output
+        return data["Findings"]  # `aws guardduty get-findings` output (PascalCase)
     return data if isinstance(data, list) else [data]
 
 

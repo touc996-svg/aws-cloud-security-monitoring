@@ -121,3 +121,46 @@ def test_cli_emits_json_lines():
     lines = proc.stdout.strip().splitlines()
     assert len(lines) == 3
     assert json.loads(lines[2])["severity"] == "critical"
+
+
+def _pascal(value):
+    if isinstance(value, dict):
+        return {k[:1].upper() + k[1:]: _pascal(v) for k, v in value.items()}
+    if isinstance(value, list):
+        return [_pascal(v) for v in value]
+    return value
+
+
+def test_cli_pascal_case_matches_camel_case(findings):
+    for f in findings:
+        camel = normalize(f, now=NOW)
+        pascal_input = _pascal(f)
+        pascal = normalize(pascal_input, now=NOW)
+        assert pascal["raw_payload"] == pascal_input  # raw never folded
+        camel.pop("raw_payload"), pascal.pop("raw_payload")
+        assert pascal == camel
+
+
+def test_cli_get_findings_wrapper(tmp_path, findings):
+    path = tmp_path / "get-findings.json"
+    path.write_text(json.dumps({"Findings": [_pascal(f) for f in findings]}))
+    proc = subprocess.run([sys.executable, "-I", str(ROOT / "aws" / "guardduty_normalizer.py"), str(path)],
+                          capture_output=True, text=True, check=True)
+    assert len(proc.stdout.strip().splitlines()) == 3
+
+
+@pytest.mark.parametrize(
+    "resource,expected",
+    [
+        ({"resourceType": "EKSCluster", "eksClusterDetails": {"arn": "arn:aws:eks:::cluster/c"}}, "arn:aws:eks:::cluster/c"),
+        ({"resourceType": "ECSCluster", "ecsClusterDetails": {"arn": "arn:aws:ecs:::cluster/c"}}, "arn:aws:ecs:::cluster/c"),
+        ({"resourceType": "RDSDBInstance", "rdsDbInstanceDetails": {"dbInstanceArn": "arn:aws:rds:::db:d"}}, "arn:aws:rds:::db:d"),
+        ({"resourceType": "Container", "containerDetails": {"id": "abc123"}}, "abc123"),
+        ({"resourceType": "AttackSequence"}, "ARN-FALLBACK"),
+    ],
+)
+def test_resource_ids_for_additional_types(findings, resource, expected):
+    f = copy.deepcopy(findings[0])
+    f["resource"] = resource
+    f["arn"] = "ARN-FALLBACK"
+    assert normalize(f, now=NOW)["resource_id"] == expected

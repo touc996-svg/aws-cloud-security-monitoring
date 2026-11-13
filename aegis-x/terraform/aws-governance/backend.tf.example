@@ -1,0 +1,12 @@
+# Shared / production state: encrypted S3 backend with native locking.
+# Rename to backend.tf only after the state bucket exists. Local validation
+# uses `terraform init -backend=false` and never touches this.
+terraform {
+  backend "s3" {
+    bucket       = "REPLACE-with-state-bucket"
+    key          = "aegis-x/aws-governance/terraform.tfstate"
+    region       = "us-east-1"
+    encrypt      = true
+    use_lockfile = true
+  }
+}

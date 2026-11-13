@@ -1,0 +1,69 @@
+{
+  "version": 1,
+  "note": "Explicit, conservative mapping of provider-native finding types to ATT&CK (Enterprise) technique IDs. Only types where the technique is directly described by the finding are mapped; everything else is intentionally left unmapped (see coverage in summary.json). Entries are review_status=proposed: authored by an AI assistant and awaiting human security-analyst review. 'source' notes where the finding semantics come from; these are NOT vendor-published ATT&CK mappings unless stated.",
+  "mappings": [
+    {
+      "cloud": "aws", "finding_type": "Recon:EC2/PortProbeUnprotectedPort", "match": "exact",
+      "techniques": ["T1046"],
+      "justification": "Probing open ports on an instance is network service discovery.",
+      "source": "AWS GuardDuty finding-type docs (Recon:EC2/PortProbeUnprotectedPort); ATT&CK T1046 definition.",
+      "review_status": "proposed"
+    },
+    {
+      "cloud": "aws", "finding_type": "UnauthorizedAccess:EC2/SSHBruteForce", "match": "exact",
+      "techniques": ["T1110"],
+      "justification": "Repeated SSH login attempts against an instance are brute forcing.",
+      "source": "AWS GuardDuty finding-type docs; ATT&CK T1110 definition.",
+      "review_status": "proposed"
+    },
+    {
+      "cloud": "aws", "finding_type": "UnauthorizedAccess:EC2/RDPBruteForce", "match": "exact",
+      "techniques": ["T1110"],
+      "justification": "Repeated RDP login attempts against an instance are brute forcing.",
+      "source": "AWS GuardDuty finding-type docs; ATT&CK T1110 definition.",
+      "review_status": "proposed"
+    },
+    {
+      "cloud": "aws", "finding_type": "UnauthorizedAccess:IAMUser/InstanceCredentialExfiltration.OutsideAWS", "match": "exact",
+      "techniques": ["T1552.005", "T1078.004"],
+      "justification": "Instance-role credentials (obtained via the metadata service) used from outside AWS: credential theft from the cloud instance metadata API, then use as a valid cloud account.",
+      "source": "AWS GuardDuty finding-type docs; ATT&CK T1552.005 and T1078.004 definitions.",
+      "review_status": "proposed"
+    },
+    {
+      "cloud": "aws", "finding_type": "Stealth:IAMUser/CloudTrailLoggingDisabled", "match": "exact",
+      "techniques": ["T1562.008"],
+      "justification": "Disabling CloudTrail logging is disabling cloud logs.",
+      "source": "AWS GuardDuty finding-type docs; ATT&CK T1562.008 definition.",
+      "review_status": "proposed"
+    },
+    {
+      "cloud": "aws", "finding_type": "CryptoCurrency:EC2/BitcoinTool.", "match": "prefix",
+      "techniques": ["T1496"],
+      "justification": "Instance communicating with Bitcoin-related infrastructure indicates mining/resource hijacking (applies to BitcoinTool.B and BitcoinTool.B!DNS).",
+      "source": "AWS GuardDuty finding-type docs; ATT&CK T1496 definition.",
+      "review_status": "proposed"
+    },
+    {
+      "cloud": "aws", "finding_type": "Backdoor:EC2/C&CActivity.B", "match": "prefix",
+      "techniques": ["T1071"],
+      "justification": "Instance querying a known command-and-control endpoint is C2 over an application-layer protocol (sub-technique not determinable from the finding).",
+      "source": "AWS GuardDuty finding-type docs (Backdoor:EC2/C&CActivity.B and .B!DNS); ATT&CK T1071 definition.",
+      "review_status": "proposed"
+    },
+    {
+      "cloud": "aws", "finding_type": "Exfiltration:S3/ObjectRead.Unusual", "match": "exact",
+      "techniques": ["T1530"],
+      "justification": "Unusual object reads from S3 by an identity correspond to collecting data from cloud storage.",
+      "source": "AWS GuardDuty finding-type docs; ATT&CK T1530 definition.",
+      "review_status": "proposed"
+    },
+    {
+      "cloud": "gcp", "finding_type": "Persistence: IAM Anomalous Grant", "match": "exact",
+      "techniques": ["T1098.003"],
+      "justification": "Granting an IAM role to an unexpected identity is adding cloud roles to an account.",
+      "source": "Google SCC Event Threat Detection docs list this category against T1098.003; ATT&CK T1098.003 definition.",
+      "review_status": "proposed"
+    }
+  ]
+}

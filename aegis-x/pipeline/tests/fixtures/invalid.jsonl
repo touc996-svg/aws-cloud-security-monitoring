@@ -1,0 +1,6 @@
+{"cloud": "aws", "observed_at": "2026-11-10T10:00:00Z", "provider": "x", "severity": "high", "title": "no id"}
+{"cloud": "aws", "finding_id": "aws:x:1", "observed_at": "2026-11-10T10:00:00Z", "provider": "x", "severity": "SEVERE", "title": "bad enum"}
+{"cloud": "aws", "finding_id": "aws:x:2", "observed_at": "2026-11-10T10:00:00", "provider": "x", "severity": "low", "title": "naive ts"}
+{"cloud": "aws", "finding_id": "aws:x:3", "observed_at": "2026-11-10T10:00:00Z", "provider": "x", "raw_payload": "str", "severity": "low", "title": "bad raw"}
+{not json
+[1,2]

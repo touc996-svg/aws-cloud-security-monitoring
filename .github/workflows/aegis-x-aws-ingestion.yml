@@ -1,0 +1,54 @@
+name: AEGIS-X AWS Ingestion
+
+on:
+  pull_request:
+    paths:
+      - 'aegis-x/terraform/aws-ingestion/**'
+      - 'aegis-x/integrations/aws/**'
+      - 'aegis-x/integrations/tests/**'
+      - '.github/workflows/aegis-x-aws-ingestion.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'aegis-x/terraform/aws-ingestion/**'
+      - 'aegis-x/integrations/aws/**'
+      - 'aegis-x/integrations/tests/**'
+      - '.github/workflows/aegis-x-aws-ingestion.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: aegis-x/terraform/aws-ingestion
+    steps:
+      - uses: actions/checkout@v4
+      - uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: '1.17.1'
+      - run: terraform fmt -check -recursive
+      - run: terraform init -backend=false
+      - run: terraform validate
+      - name: Checkov
+        uses: bridgecrewio/checkov-action@v12
+        with:
+          directory: aegis-x/terraform/aws-ingestion
+          framework: terraform
+          soft_fail: false
+
+  tests:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: aegis-x/integrations
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -r requirements-dev.txt
+      - run: python -m pytest -q tests/test_lambda_handler.py

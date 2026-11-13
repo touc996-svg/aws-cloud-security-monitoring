@@ -30,9 +30,9 @@ Findings - Imported ┘                        └─ failures ─► SQS DLQ   
   (idempotent); versioning keeps history of updated findings.
 - A bad event (unknown source, invalid finding, S3 error) raises, so Lambda
   retries and then the event lands in the DLQ. Nothing is swallowed.
-- Security Hub support depends on `securityhub_normalizer` (PR #5). Until it is
-  merged and packaged, Security Hub events fail into the DLQ; set
-  `enable_securityhub_rule=false` to avoid that noise.
+- Security Hub events carry several ASFF findings, so the handler uses
+  `securityhub_normalizer.normalize_all`. If that module were ever missing from
+  the package, those events fail into the DLQ instead of breaking GuardDuty.
 
 ## Before applying
 ```bash

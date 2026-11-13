@@ -1,7 +1,6 @@
 import copy
 import json
 import sys
-import types
 from pathlib import Path
 
 import pytest
@@ -117,41 +116,57 @@ def test_s3_failure_raises_ingestion_error():
         lh.handler(gd_event(), None, s3_client=StubS3(fail_keys=["findings/"]))
 
 
-def _install_fake_securityhub(monkeypatch, records):
-    """Register a stand-in normalize_all (the real module lives in PR #5)."""
-    fake = types.ModuleType("aws.securityhub_normalizer")
-    fake.normalize_all = lambda payload: copy.deepcopy(records)
-    monkeypatch.setitem(sys.modules, "aws.securityhub_normalizer", fake)
+SH_FIXTURE = ROOT / "tests" / "fixtures" / "securityhub_findings.json"
 
 
-def sh_event():
-    return {"source": "aws.securityhub", "detail-type": "Security Hub Findings - Imported", "detail": {"findings": [{}, {}]}}
+def sh_event(n=2):
+    """EventBridge event carrying n real ASFF findings (fixture, ids made unique)."""
+    base = json.loads(SH_FIXTURE.read_text())["Findings"][0]
+    findings = []
+    for i in range(n):
+        f = copy.deepcopy(base)
+        f["Id"] = f"{base['Id']}-copy{i}"
+        findings.append(f)
+    return {
+        "source": "aws.securityhub",
+        "detail-type": "Security Hub Findings - Imported",
+        "detail": {"findings": findings},
+    }
 
 
-def test_securityhub_event_with_multiple_findings(monkeypatch):
-    recs = [{"finding_id": f"aws:securityhub:1:us-east-1:arn:aws:securityhub:f/{i}", "provider": "securityhub"} for i in range(2)]
-    _install_fake_securityhub(monkeypatch, recs)
+def test_securityhub_event_with_multiple_findings():
     s3 = StubS3()
-    result = lh.handler(sh_event(), None, s3_client=s3)
+    result = lh.handler(sh_event(2), None, s3_client=s3)
     assert result["stored"] == 2
     assert len(s3.objects) == 2
+    for body in s3.objects.values():
+        assert json.loads(body)["provider"] == "securityhub"
 
 
-def test_partial_failure_attempts_all_then_raises(monkeypatch):
-    recs = [{"finding_id": "ok-1"}, {"finding_id": "bad-2"}, {"finding_id": "ok-3"}]
-    _install_fake_securityhub(monkeypatch, recs)
-    s3 = StubS3(fail_keys=["bad-2"])
+def test_partial_failure_attempts_all_then_raises():
+    s3 = StubS3(fail_keys=["copy1"])
     with pytest.raises(lh.IngestionError, match="1 of 3"):
-        lh.handler(sh_event(), None, s3_client=s3)
+        lh.handler(sh_event(3), None, s3_client=s3)
     assert len(s3.calls) == 3
     assert len(s3.objects) == 2
 
 
+def test_securityhub_invalid_asff_raises():
+    event = sh_event(1)
+    event["detail"]["findings"] = [{"Id": "x"}]
+    with pytest.raises(NormalizationError, match="missing required"):
+        lh.handler(event, None, s3_client=StubS3())
+
+
 def test_securityhub_unavailable_degrades_to_error(monkeypatch):
+    import aws
+
+    # `from . import x` checks the package attribute before sys.modules, so remove both.
+    monkeypatch.delattr(aws, "securityhub_normalizer", raising=False)
     monkeypatch.setitem(sys.modules, "aws.securityhub_normalizer", None)  # forces ImportError
     monkeypatch.setitem(sys.modules, "securityhub_normalizer", None)
     with pytest.raises(NormalizationError, match="not packaged"):
-        lh.handler(sh_event(), None, s3_client=StubS3())
+        lh.handler(sh_event(1), None, s3_client=StubS3())
 
 
 def test_registry_routes():

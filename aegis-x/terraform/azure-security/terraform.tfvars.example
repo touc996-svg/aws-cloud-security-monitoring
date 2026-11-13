@@ -1,0 +1,16 @@
+# Copy to terraform.tfvars (git-ignored). Every feature is OFF by default
+# because each one is billable; flip them only after reviewing `terraform plan`
+# and the cost estimate in README.md. Requires a real Azure subscription.
+subscription_id     = "00000000-0000-0000-0000-000000000000"
+location            = "westeurope"
+environment         = "sandbox"
+resource_group_name = "rg-aegisx-security"
+workspace_name      = "law-aegisx-security"
+retention_in_days   = 90
+daily_quota_gb      = 1
+
+enable_log_analytics_workspace  = false
+enable_sentinel                 = false
+enable_defender_plans           = false
+defender_plans                  = ["Arm", "KeyVaults"]
+enable_activity_log_diagnostics = false

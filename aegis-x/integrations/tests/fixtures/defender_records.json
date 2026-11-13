@@ -1,0 +1,64 @@
+{
+  "alert": {
+    "id": "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/rg-app/providers/Microsoft.Security/locations/centralus/alerts/2517000000000000000_abc",
+    "name": "2517000000000000000_abc",
+    "type": "Microsoft.Security/Locations/alerts",
+    "properties": {
+      "version": "2022-01-01",
+      "alertType": "VM_SuspiciousScreenSaver",
+      "systemAlertId": "2517000000000000000_abc",
+      "productComponentName": "VirtualMachines",
+      "alertDisplayName": "Suspicious screensaver process executed",
+      "description": "Analysis of host data detected a screensaver process.",
+      "severity": "High",
+      "intent": "Persistence",
+      "startTimeUtc": "2026-11-07T14:00:00.1234567Z",
+      "endTimeUtc": "2026-11-07T14:10:00Z",
+      "status": "Active",
+      "alertUri": "https://portal.azure.com/#blade/Microsoft_Azure_Security/AlertBlade/alertId/2517",
+      "techniques": ["T1546"],
+      "subTechniques": ["T1546.002"],
+      "resourceIdentifiers": [
+        {"type": "AzureResource", "azureResourceId": "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/rg-app/providers/Microsoft.Compute/virtualMachines/vm-web01"},
+        {"type": "LogAnalytics", "workspaceId": "w", "workspaceSubscriptionId": "00000000-1111-2222-3333-444444444444"}
+      ]
+    }
+  },
+  "alert_microsoft_specific_intent": {
+    "id": "/subscriptions/00000000-1111-2222-3333-444444444444/providers/Microsoft.Security/locations/westeurope/alerts/2517000000000000001_def",
+    "name": "2517000000000000001_def",
+    "type": "Microsoft.Security/Locations/alerts",
+    "properties": {
+      "alertType": "SQL_PotentialSqlInjection",
+      "systemAlertId": "2517000000000000001_def",
+      "alertDisplayName": "Potential SQL injection",
+      "severity": "Low",
+      "intent": "Probing",
+      "startTimeUtc": "2026-11-08T01:00:00Z",
+      "status": "Dismissed"
+    }
+  },
+  "assessment_unhealthy": {
+    "id": "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/rg-data/providers/Microsoft.Storage/storageAccounts/stdata01/providers/Microsoft.Security/assessments/4fb67663-9ab9-475d-b026-8c544cced439",
+    "name": "4fb67663-9ab9-475d-b026-8c544cced439",
+    "type": "Microsoft.Security/assessments",
+    "properties": {
+      "resourceDetails": {"Source": "Azure", "Id": "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/rg-data/providers/Microsoft.Storage/storageAccounts/stdata01"},
+      "displayName": "Secure transfer to storage accounts should be enabled",
+      "status": {"code": "Unhealthy", "cause": "OffByPolicy", "firstEvaluationDate": "2026-10-20T00:00:00.0000000Z", "statusChangeDate": "2026-10-21T06:30:00.0000000Z"},
+      "links": {"azurePortalUri": "https://portal.azure.com/#blade/assessment"},
+      "metadata": {"severity": "Medium", "assessmentType": "BuiltIn", "description": "Enforce HTTPS on storage accounts."}
+    }
+  },
+  "assessment_healthy": {
+    "id": "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/rg-data/providers/Microsoft.Storage/storageAccounts/stdata02/providers/Microsoft.Security/assessments/4fb67663-9ab9-475d-b026-8c544cced439",
+    "name": "4fb67663-9ab9-475d-b026-8c544cced439",
+    "type": "Microsoft.Security/assessments",
+    "properties": {
+      "resourceDetails": {"Source": "Azure", "Id": "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/rg-data/providers/Microsoft.Storage/storageAccounts/stdata02"},
+      "displayName": "Secure transfer to storage accounts should be enabled",
+      "status": {"code": "Healthy", "firstEvaluationDate": "2026-10-20T00:00:00Z"},
+      "metadata": {"severity": "Medium", "assessmentType": "BuiltIn"}
+    }
+  }
+}

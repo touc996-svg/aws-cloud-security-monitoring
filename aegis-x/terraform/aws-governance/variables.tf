@@ -53,3 +53,9 @@ variable "security_hub_standards" {
   type        = list(string)
   default     = ["aws-foundational-security-best-practices/v/1.0.0"]
 }
+
+variable "enable_account_s3_public_access_block" {
+  description = "Manage the account-wide S3 Block Public Access setting (all four protections on). Free. Off by default so the module changes nothing until enabled."
+  type        = bool
+  default     = false
+}

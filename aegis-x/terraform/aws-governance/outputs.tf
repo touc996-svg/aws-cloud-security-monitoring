@@ -12,3 +12,8 @@ output "security_hub_enabled" {
   description = "Whether Security Hub CSPM is managed by this module."
   value       = var.enable_security_hub
 }
+
+output "account_s3_public_access_block_managed" {
+  description = "Whether the account-wide S3 Block Public Access setting is managed by this module."
+  value       = var.enable_account_s3_public_access_block
+}

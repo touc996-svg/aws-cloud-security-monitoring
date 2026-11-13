@@ -5,6 +5,14 @@ off by default** because they are billable. Nothing here creates, edits or
 replaces the existing GuardDuty detector or the `cloud-security-monitoring-trail`
 CloudTrail trail.
 
+## Account-wide S3 Block Public Access
+`enable_account_s3_public_access_block` (free, default `false`) manages the
+account-level setting. It was first applied by CLI on 2026-11-13 after confirming
+the only buckets (two CloudTrail log buckets) were private. The Terraform
+resource is an upsert, so enabling it over the live setting is safe; it has
+`prevent_destroy` so it cannot be removed by accident. Use shared remote state
+(see below) before relying on it, otherwise state lives only on one laptop.
+
 ## Why there is no organization trail
 The Organization currently has a single account. The existing trail is already
 multi-region, KMS-encrypted and log-validated. A second (organization) trail

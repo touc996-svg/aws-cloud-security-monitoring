@@ -108,4 +108,4 @@ The repository began as a hands-on AWS monitoring project: CloudTrail, GuardDuty
 
 ## Author
 
-Jacques Hugo St Cyr. Built with Claude Code as a pair-programming assistant; I directed the design, reviewed the changes and decided what to build and what to leave undeployed.
+Jacques Hugo St Cyr

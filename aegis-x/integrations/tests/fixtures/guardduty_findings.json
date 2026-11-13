@@ -1,0 +1,64 @@
+[
+  {
+    "schemaVersion": "2.0",
+    "accountId": "803872867382",
+    "region": "us-east-1",
+    "partition": "aws",
+    "id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa1",
+    "arn": "arn:aws:guardduty:us-east-1:803872867382:detector/46d0c8c6d1c1405d47a64ed2fad490f5/finding/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa1",
+    "type": "Recon:EC2/PortProbeUnprotectedPort",
+    "resource": {
+      "resourceType": "Instance",
+      "instanceDetails": {"instanceId": "i-99999999", "instanceType": "m3.xlarge"}
+    },
+    "severity": 2,
+    "createdAt": "2026-11-12T20:00:00.000Z",
+    "updatedAt": "2026-11-12T20:30:00.000Z",
+    "title": "Unprotected port on EC2 instance i-99999999 is being probed.",
+    "description": "EC2 instance has an unprotected port which is being probed by a known malicious host.",
+    "service": {
+      "serviceName": "guardduty",
+      "detectorId": "46d0c8c6d1c1405d47a64ed2fad490f5",
+      "archived": false,
+      "count": 3,
+      "eventFirstSeen": "2026-11-12T20:00:00.000Z",
+      "eventLastSeen": "2026-11-12T20:30:00.000Z"
+    }
+  },
+  {
+    "schemaVersion": "2.0",
+    "accountId": "803872867382",
+    "region": "us-east-1",
+    "id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa2",
+    "arn": "arn:aws:guardduty:us-east-1:803872867382:detector/46d0c8c6d1c1405d47a64ed2fad490f5/finding/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa2",
+    "type": "UnauthorizedAccess:IAMUser/InstanceCredentialExfiltration.OutsideAWS",
+    "resource": {
+      "resourceType": "AccessKey",
+      "accessKeyDetails": {"accessKeyId": "ASIAEXAMPLEEXAMPLE", "userType": "AssumedRole"}
+    },
+    "severity": 8,
+    "createdAt": "2026-11-12T21:00:00.000Z",
+    "updatedAt": "2026-11-12T21:00:00.000Z",
+    "title": "Credentials created exclusively for an EC2 instance were used from an external IP address.",
+    "description": "Instance credentials were used from outside AWS.",
+    "service": {"serviceName": "guardduty", "archived": true, "eventFirstSeen": "2026-11-12T21:00:00.000Z", "eventLastSeen": "2026-11-12T21:00:00.000Z"}
+  },
+  {
+    "schemaVersion": "2.0",
+    "accountId": "803872867382",
+    "region": "us-east-1",
+    "id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa3",
+    "arn": "arn:aws:guardduty:us-east-1:803872867382:detector/46d0c8c6d1c1405d47a64ed2fad490f5/finding/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa3",
+    "type": "Policy:S3/BucketPublicAccessGranted",
+    "resource": {
+      "resourceType": "S3Bucket",
+      "s3BucketDetails": [{"arn": "arn:aws:s3:::example-bucket", "name": "example-bucket"}]
+    },
+    "severity": 9.5,
+    "createdAt": "2026-11-12T22:00:00.000Z",
+    "updatedAt": "2026-11-12T22:05:00.000Z",
+    "title": "S3 bucket example-bucket was made public.",
+    "description": "Public access was granted to the bucket.",
+    "service": {"serviceName": "guardduty", "eventFirstSeen": "2026-11-12T22:00:00.000Z", "eventLastSeen": "2026-11-12T22:05:00.000Z"}
+  }
+]

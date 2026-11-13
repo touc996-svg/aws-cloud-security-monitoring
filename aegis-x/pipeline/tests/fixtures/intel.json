@@ -1,0 +1,10 @@
+{
+  "indicators": [
+    {
+      "indicator": "203.0.113.50",
+      "type": "ip",
+      "source": "second-feed",
+      "confidence": 55
+    }
+  ]
+}

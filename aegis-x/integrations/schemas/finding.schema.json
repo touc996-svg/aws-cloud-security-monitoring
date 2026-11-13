@@ -11,24 +11,103 @@
     "observed_at"
   ],
   "properties": {
-    "finding_id": {"type": "string"},
-    "cloud": {"enum": ["aws", "azure", "gcp"]},
-    "provider": {"type": "string"},
-    "native_id": {"type": "string"},
-    "severity": {
-      "enum": ["critical", "high", "medium", "low", "informational"]
+    "finding_id": {
+      "type": "string"
     },
-    "title": {"type": "string"},
-    "description": {"type": "string"},
-    "resource_id": {"type": "string"},
-    "account_id": {"type": "string"},
-    "region": {"type": "string"},
-    "observed_at": {"type": "string", "format": "date-time"},
+    "cloud": {
+      "enum": [
+        "aws",
+        "azure",
+        "gcp"
+      ]
+    },
+    "provider": {
+      "type": "string"
+    },
+    "native_id": {
+      "type": "string"
+    },
+    "severity": {
+      "enum": [
+        "critical",
+        "high",
+        "medium",
+        "low",
+        "informational"
+      ]
+    },
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "resource_id": {
+      "type": "string"
+    },
+    "account_id": {
+      "type": "string"
+    },
+    "region": {
+      "type": "string"
+    },
+    "observed_at": {
+      "type": "string",
+      "format": "date-time"
+    },
     "mitre_techniques": {
       "type": "array",
-      "items": {"type": "string"}
+      "items": {
+        "type": "string"
+      }
     },
-    "raw_payload": {"type": "object"}
+    "raw_payload": {
+      "type": "object"
+    },
+    "finding_type": {
+      "type": "string",
+      "description": "Provider-native finding type, e.g. Recon:EC2/PortProbeUnprotectedPort"
+    },
+    "status": {
+      "enum": [
+        "active",
+        "archived",
+        "unknown"
+      ]
+    },
+    "first_seen": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "last_seen": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "ingested_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "type",
+          "ref"
+        ],
+        "properties": {
+          "type": {
+            "type": "string"
+          },
+          "ref": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "native_severity": {
+      "description": "Original provider severity value, unmodified."
+    }
   },
   "additionalProperties": true
 }

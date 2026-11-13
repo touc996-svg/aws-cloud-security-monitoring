@@ -20,3 +20,5 @@ service-account*.json
 # Local files
 .DS_Store
 __pycache__/
+__pycache__/
+.pytest_cache/

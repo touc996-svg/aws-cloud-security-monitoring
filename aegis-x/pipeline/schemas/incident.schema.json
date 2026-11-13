@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AEGIS-X Correlated Incident Document",
+  "type": "object",
+  "required": ["incidents", "uncorrelated_finding_ids"],
+  "properties": {
+    "uncorrelated_finding_ids": {"type": "array", "items": {"type": "string"}},
+    "incidents": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["incident_id", "member_finding_ids", "highest_severity", "clouds", "first_seen", "last_seen", "score", "grouping_reasons", "timeline", "evidence_refs", "raw_payload_refs"],
+        "properties": {
+          "incident_id": {"type": "string", "pattern": "^inc-[0-9a-f]{16}$"},
+          "member_finding_ids": {"type": "array", "items": {"type": "string"}, "minItems": 1},
+          "highest_severity": {"enum": ["critical", "high", "medium", "low", "informational"]},
+          "clouds": {"type": "array", "items": {"enum": ["aws", "azure", "gcp"]}, "minItems": 1},
+          "accounts": {"type": "array", "items": {"type": "string"}},
+          "first_seen": {"type": "string"},
+          "last_seen": {"type": "string"},
+          "mitre_techniques": {"type": "array", "items": {"type": "string"}},
+          "threat_intel_indicators": {"type": "array", "items": {"type": "string"}},
+          "score": {
+            "type": "object",
+            "required": ["total", "components"],
+            "properties": {"total": {"type": "integer", "minimum": 0, "maximum": 100}, "components": {"type": "object", "additionalProperties": {"type": "integer"}}}
+          },
+          "grouping_reasons": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["a", "b", "score", "gap_seconds", "reasons"],
+              "properties": {
+                "a": {"type": "string"}, "b": {"type": "string"},
+                "score": {"type": "integer"}, "gap_seconds": {"type": "integer", "minimum": 0},
+                "reasons": {"type": "array", "minItems": 1, "items": {"type": "object", "required": ["key", "value", "weight"]}}
+              }
+            }
+          },
+          "timeline": {"type": "array", "items": {"type": "object", "required": ["time", "finding_id", "cloud", "severity", "title"]}},
+          "evidence_refs": {"type": "array", "items": {"type": "object", "required": ["type", "ref"]}},
+          "raw_payload_refs": {"type": "array", "items": {"type": "object", "required": ["finding_id", "payload_sha256"]}}
+        }
+      }
+    }
+  }
+}

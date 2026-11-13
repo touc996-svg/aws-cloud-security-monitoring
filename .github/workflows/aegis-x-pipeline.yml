@@ -1,0 +1,34 @@
+name: AEGIS-X Pipeline
+
+on:
+  pull_request:
+    paths:
+      - 'aegis-x/pipeline/**'
+      - 'aegis-x/integrations/schemas/**'
+      - '.github/workflows/aegis-x-pipeline.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'aegis-x/pipeline/**'
+      - 'aegis-x/integrations/schemas/**'
+      - '.github/workflows/aegis-x-pipeline.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  pipeline-tests:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: aegis-x
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install dependencies
+        run: pip install -r pipeline/requirements.txt
+      - name: Run pipeline tests
+        run: python -m pytest -q pipeline

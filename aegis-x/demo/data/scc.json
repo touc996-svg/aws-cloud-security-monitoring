@@ -1,0 +1,33 @@
+{
+  "finding": {
+    "name": "organizations/111222333444/sources/5678901234/findings/demo0c2finding",
+    "parent": "organizations/111222333444/sources/5678901234",
+    "resourceName": "//compute.googleapis.com/projects/demo-project-1/zones/us-central1-a/instances/1234567890",
+    "state": "ACTIVE",
+    "category": "Malware: Bad IP",
+    "eventTime": "2026-11-10T10:20:00.000Z",
+    "createTime": "2026-11-10T10:20:30.000Z",
+    "severity": "HIGH",
+    "canonicalName": "projects/222333/sources/5678901234/findings/demo0c2finding",
+    "mute": "UNMUTED",
+    "findingClass": "THREAT",
+    "description": "A VM connected to a known malicious IP address.",
+    "sourceProperties": {
+      "destination_ip": "203.0.113.50"
+    },
+    "mitreAttack": {
+      "primaryTactic": "COMMAND_AND_CONTROL",
+      "primaryTechniques": [
+        "APPLICATION_LAYER_PROTOCOL"
+      ],
+      "additionalTechniques": [
+        "T1071"
+      ]
+    }
+  },
+  "resource": {
+    "name": "//compute.googleapis.com/projects/demo-project-1/zones/us-central1-a/instances/1234567890",
+    "projectDisplayName": "demo-project-1",
+    "type": "google.compute.Instance"
+  }
+}

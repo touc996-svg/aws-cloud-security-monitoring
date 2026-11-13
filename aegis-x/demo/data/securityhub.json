@@ -1,0 +1,39 @@
+{
+  "Findings": [
+    {
+      "SchemaVersion": "2018-10-08",
+      "Id": "arn:aws:guardduty:us-east-1:111111111111:detector/demo0detector0000000000000000/finding/0123456789abcdef0123456789abc2b0",
+      "ProductArn": "arn:aws:securityhub:us-east-1::product/aws/guardduty",
+      "ProductName": "GuardDuty",
+      "GeneratorId": "arn:aws:guardduty:us-east-1:111111111111:detector/demo0detector0000000000000000",
+      "AwsAccountId": "111111111111",
+      "Types": [
+        "TTPs/Command and Control/Backdoor:EC2-C&CActivity.B!DNS"
+      ],
+      "FirstObservedAt": "2026-11-10T10:00:00.000Z",
+      "LastObservedAt": "2026-11-10T10:25:00.000Z",
+      "CreatedAt": "2026-11-10T10:00:30.000Z",
+      "UpdatedAt": "2026-11-10T10:25:30.000Z",
+      "Severity": {
+        "Product": 8,
+        "Label": "HIGH",
+        "Normalized": 80
+      },
+      "Title": "EC2 instance i-0demo0001 is querying a domain name associated with a known command and control server.",
+      "Description": "Imported into Security Hub from GuardDuty.",
+      "Resources": [
+        {
+          "Type": "AwsEc2Instance",
+          "Id": "arn:aws:ec2:us-east-1:111111111111:instance/i-0demo0001",
+          "Partition": "aws",
+          "Region": "us-east-1"
+        }
+      ],
+      "Workflow": {
+        "Status": "NEW"
+      },
+      "RecordState": "ACTIVE",
+      "Region": "us-east-1"
+    }
+  ]
+}

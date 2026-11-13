@@ -30,3 +30,5 @@ jobs:
         run: pip install -r validation/requirements.txt
       - name: End-to-end, recovery, governance and security-control tests
         run: python -m pytest -q validation
+      - name: Run the offline demo
+        run: python demo/run_demo.py

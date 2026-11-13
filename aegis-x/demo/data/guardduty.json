@@ -1,0 +1,81 @@
+[
+  {
+    "schemaVersion": "2.0",
+    "accountId": "111111111111",
+    "region": "us-east-1",
+    "partition": "aws",
+    "id": "0123456789abcdef0123456789abc2b0",
+    "arn": "arn:aws:guardduty:us-east-1:111111111111:detector/demo0detector0000000000000000/finding/0123456789abcdef0123456789abc2b0",
+    "type": "Backdoor:EC2/C&CActivity.B!DNS",
+    "severity": 8,
+    "createdAt": "2026-11-10T10:00:10.000Z",
+    "updatedAt": "2026-11-10T10:25:00.000Z",
+    "title": "EC2 instance i-0demo0001 is querying a domain name associated with a known command and control server.",
+    "description": "The EC2 instance is communicating with an IP associated with a known C&C server.",
+    "resource": {
+      "resourceType": "Instance",
+      "instanceDetails": {
+        "instanceId": "i-0demo0001",
+        "instanceType": "t3.medium"
+      }
+    },
+    "service": {
+      "serviceName": "guardduty",
+      "detectorId": "demo0detector0000000000000000",
+      "archived": false,
+      "count": 6,
+      "eventFirstSeen": "2026-11-10T10:00:00.000Z",
+      "eventLastSeen": "2026-11-10T10:25:00.000Z",
+      "action": {
+        "actionType": "NETWORK_CONNECTION",
+        "networkConnectionAction": {
+          "connectionDirection": "OUTBOUND",
+          "remoteIpDetails": {
+            "ipAddressV4": "203.0.113.50"
+          },
+          "remotePortDetails": {
+            "port": 443
+          }
+        }
+      }
+    }
+  },
+  {
+    "schemaVersion": "2.0",
+    "accountId": "111111111111",
+    "region": "us-east-1",
+    "partition": "aws",
+    "id": "0123456789abcdef0123456789abcb31",
+    "arn": "arn:aws:guardduty:us-east-1:111111111111:detector/demo0detector0000000000000000/finding/0123456789abcdef0123456789abcb31",
+    "type": "Recon:EC2/PortProbeUnprotectedPort",
+    "severity": 2,
+    "createdAt": "2026-11-10T09:00:00.000Z",
+    "updatedAt": "2026-11-10T09:05:00.000Z",
+    "title": "Unprotected port on EC2 instance i-0demo0099 is being probed.",
+    "description": "Routine internet scanning of an unprotected port.",
+    "resource": {
+      "resourceType": "Instance",
+      "instanceDetails": {
+        "instanceId": "i-0demo0099"
+      }
+    },
+    "service": {
+      "serviceName": "guardduty",
+      "archived": false,
+      "eventFirstSeen": "2026-11-10T09:00:00.000Z",
+      "eventLastSeen": "2026-11-10T09:05:00.000Z",
+      "action": {
+        "actionType": "PORT_PROBE",
+        "portProbeAction": {
+          "portProbeDetails": [
+            {
+              "remoteIpDetails": {
+                "ipAddressV4": "198.51.100.77"
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+]

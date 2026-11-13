@@ -1,0 +1,34 @@
+{
+  "id": "/subscriptions/00000000-aaaa-bbbb-cccc-111111111111/resourceGroups/rg-demo/providers/Microsoft.Security/locations/eastus/alerts/2517000000000000000_demo",
+  "name": "2517000000000000000_demo",
+  "type": "Microsoft.Security/Locations/alerts",
+  "properties": {
+    "version": "2022-01-01",
+    "alertType": "VM_TrafficToKnownBadIp",
+    "systemAlertId": "2517000000000000000_demo",
+    "productComponentName": "VirtualMachines",
+    "alertDisplayName": "Communication with a known malicious IP address detected",
+    "description": "Network traffic analysis detected communication with a known malicious IP address.",
+    "severity": "High",
+    "intent": "CommandAndControl",
+    "startTimeUtc": "2026-11-10T10:12:00Z",
+    "endTimeUtc": "2026-11-10T10:30:00Z",
+    "status": "Active",
+    "techniques": [
+      "T1071"
+    ],
+    "subTechniques": [
+      "T1071.001"
+    ],
+    "extendedProperties": {
+      "Destination IP": "203.0.113.50",
+      "Destination Port": "443"
+    },
+    "resourceIdentifiers": [
+      {
+        "type": "AzureResource",
+        "azureResourceId": "/subscriptions/00000000-aaaa-bbbb-cccc-111111111111/resourceGroups/rg-demo/providers/Microsoft.Compute/virtualMachines/vm-demo01"
+      }
+    ]
+  }
+}

@@ -1,0 +1,6 @@
+indicator,type,source,confidence,description
+203.0.113.50,ip,example-feed,90,Known C2
+example.net,domain,example-feed,60,Bad apex domain
+d41d8cd98f00b204e9800998ecf8427e,,example-feed,80,Test hash
+not a thing,ip,example-feed,50,bad row
+198.51.100.7,ip,example-feed,500,confidence out of range

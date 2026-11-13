@@ -1,0 +1,57 @@
+name: AEGIS-X Azure
+
+on:
+  pull_request:
+    paths:
+      - 'aegis-x/integrations/azure/**'
+      - 'aegis-x/integrations/tests/**azure**'
+      - 'aegis-x/integrations/tests/fixtures/sentinel_records.json'
+      - 'aegis-x/integrations/tests/fixtures/defender_records.json'
+      - 'aegis-x/integrations/schemas/**'
+      - 'aegis-x/terraform/azure-security/**'
+      - '.github/workflows/aegis-x-azure.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'aegis-x/integrations/azure/**'
+      - 'aegis-x/integrations/tests/**azure**'
+      - 'aegis-x/terraform/azure-security/**'
+      - '.github/workflows/aegis-x-azure.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  azure-normalizer-tests:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: aegis-x/integrations
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -r requirements-dev.txt
+      - run: python -m pytest -q tests/test_azure_sentinel_normalizer.py tests/test_azure_defender_normalizer.py
+
+  azure-terraform:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: aegis-x/terraform/azure-security
+    steps:
+      - uses: actions/checkout@v4
+      - uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: '1.17.1'
+      - run: terraform fmt -check -recursive
+      - run: terraform init -backend=false
+      - run: terraform validate
+      - name: Checkov
+        uses: bridgecrewio/checkov-action@v12
+        with:
+          directory: aegis-x/terraform/azure-security
+          framework: terraform
+          soft_fail: false

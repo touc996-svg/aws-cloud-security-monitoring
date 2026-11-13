@@ -7,3 +7,4 @@ environment         = "sandbox"
 enable_config               = false
 config_record_all_resources = false
 enable_security_hub         = false
+enable_account_s3_public_access_block = false # free; already applied by CLI, see s3_account.tf

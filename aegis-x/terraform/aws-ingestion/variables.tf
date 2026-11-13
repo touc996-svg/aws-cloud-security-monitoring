@@ -29,7 +29,7 @@ variable "enable_guardduty_rule" {
 }
 
 variable "enable_securityhub_rule" {
-  description = "Route Security Hub Findings - Imported events to the ingestion Lambda (only effective when enable_ingestion is true). The Lambda needs securityhub_normalizer packaged; until then those events land in the DLQ."
+  description = "Route Security Hub Findings - Imported events to the ingestion Lambda (only effective when enable_ingestion is true)."
   type        = bool
   default     = true
 }

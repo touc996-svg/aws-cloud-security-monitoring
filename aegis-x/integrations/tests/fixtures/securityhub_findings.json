@@ -1,0 +1,59 @@
+{
+  "Findings": [
+    {
+      "SchemaVersion": "2018-10-08",
+      "Id": "arn:aws:guardduty:us-east-1:803872867382:detector/46d0c8c6d1c1405d47a64ed2fad490f5/finding/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa2",
+      "ProductArn": "arn:aws:securityhub:us-east-1::product/aws/guardduty",
+      "ProductName": "GuardDuty",
+      "GeneratorId": "arn:aws:guardduty:us-east-1:803872867382:detector/46d0c8c6d1c1405d47a64ed2fad490f5",
+      "AwsAccountId": "803872867382",
+      "Types": ["TTPs/Credential Access/UnauthorizedAccess:IAMUser-InstanceCredentialExfiltration.OutsideAWS"],
+      "FirstObservedAt": "2026-11-12T21:00:00.000Z",
+      "LastObservedAt": "2026-11-12T21:05:00.000Z",
+      "CreatedAt": "2026-11-12T21:00:10.000Z",
+      "UpdatedAt": "2026-11-12T21:05:10.000Z",
+      "Severity": {"Product": 8, "Label": "HIGH", "Normalized": 80},
+      "Title": "Credentials created exclusively for an EC2 instance were used from an external IP address.",
+      "Description": "Instance credentials were used from outside AWS.",
+      "Resources": [{"Type": "AwsIamAccessKey", "Id": "AWS::IAM::AccessKey:ASIAEXAMPLEEXAMPLE", "Partition": "aws", "Region": "us-east-1"}],
+      "Workflow": {"Status": "NEW"},
+      "RecordState": "ACTIVE",
+      "Region": "us-east-1"
+    },
+    {
+      "SchemaVersion": "2018-10-08",
+      "Id": "arn:aws:securityhub:us-east-1:803872867382:subscription/aws-foundational-security-best-practices/v/1.0.0/S3.2/finding/11111111-2222-3333-4444-555555555555",
+      "ProductArn": "arn:aws:securityhub:us-east-1:803872867382:product/803872867382/default",
+      "ProductName": "Security Hub",
+      "GeneratorId": "aws-foundational-security-best-practices/v/1.0.0/S3.2",
+      "AwsAccountId": "803872867382",
+      "Types": ["Software and Configuration Checks/Industry and Regulatory Standards/AWS-Foundational-Security-Best-Practices"],
+      "CreatedAt": "2026-11-12T22:00:00.000Z",
+      "UpdatedAt": "2026-11-12T22:30:00.000Z",
+      "Severity": {"Label": "CRITICAL", "Normalized": 90},
+      "Title": "S3 general purpose buckets should block public read access",
+      "Description": "This control checks whether S3 buckets allow public read access.",
+      "Remediation": {"Recommendation": {"Text": "For directions, see the documentation.", "Url": "https://docs.aws.amazon.com/console/securityhub/S3.2/remediation"}},
+      "Resources": [{"Type": "AwsS3Bucket", "Id": "arn:aws:s3:::example-bucket", "Partition": "aws", "Region": "us-east-1"}],
+      "Compliance": {"Status": "FAILED"},
+      "Workflow": {"Status": "NEW"},
+      "RecordState": "ARCHIVED",
+      "Region": "us-east-1"
+    },
+    {
+      "SchemaVersion": "2018-10-08",
+      "Id": "arn:aws:inspector2:us-east-1:803872867382:finding/abc",
+      "ProductArn": "arn:aws:securityhub:us-east-1::product/aws/inspector",
+      "ProductName": "Inspector",
+      "GeneratorId": "AWSInspector",
+      "AwsAccountId": "803872867382",
+      "Types": [],
+      "CreatedAt": "2026-11-12T23:00:00.000Z",
+      "UpdatedAt": "2026-11-12T23:00:00.000Z",
+      "Severity": {"Normalized": 45},
+      "Title": "CVE-0000-0000 - example package",
+      "Resources": [{"Type": "AwsEc2Instance", "Id": "arn:aws:ec2:us-east-1:803872867382:instance/i-99999999", "Region": "us-east-1"}],
+      "RecordState": "ACTIVE"
+    }
+  ]
+}

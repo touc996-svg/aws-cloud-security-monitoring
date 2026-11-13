@@ -1,0 +1,32 @@
+name: AEGIS-X Validation
+
+on:
+  pull_request:
+    paths:
+      - 'aegis-x/**'
+      - '.github/workflows/aegis-x-validation.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'aegis-x/**'
+      - '.github/workflows/aegis-x-validation.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validation:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: aegis-x
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install dependencies
+        run: pip install -r validation/requirements.txt
+      - name: End-to-end, recovery, governance and security-control tests
+        run: python -m pytest -q validation

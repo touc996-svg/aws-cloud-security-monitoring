@@ -91,7 +91,8 @@ def test_camel_case_input_also_works(findings):
         return v
     a = normalize(findings[1], now=NOW)
     b = normalize(lower(findings[1]), now=NOW)
-    a.pop("raw_payload"), b.pop("raw_payload")
+    for key in ("raw_payload", "native_severity"):  # intentionally the untouched originals
+        a.pop(key), b.pop(key)
     assert a == b
 
 
